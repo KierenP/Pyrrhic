@@ -38,19 +38,18 @@
  * to define White as 0 and Black as 1.
  */
 
-#include "../attacks.h"
-#include "../bitboards.h"
+#include "..\MoveGeneration.h"
 
-#define PYRRHIC_POPCOUNT(x)              (popcount(x))
-#define PYRRHIC_LSB(x)                   (getlsb(x))
-#define PYRRHIC_POPLSB(x)                (poplsb(x))
+#define PYRRHIC_POPCOUNT(x)              (GetBitCount(x))
+#define PYRRHIC_LSB(x)                   (LSB(x))
+#define PYRRHIC_POPLSB(x)                (LSBpop(*x))
 
-#define PYRRHIC_PAWN_ATTACKS(sq, c)      (pawnAttacks(!c, sq))
-#define PYRRHIC_KNIGHT_ATTACKS(sq)       (knightAttacks(sq))
-#define PYRRHIC_BISHOP_ATTACKS(sq, occ)  (bishopAttacks(sq, occ))
-#define PYRRHIC_ROOK_ATTACKS(sq, occ)    (rookAttacks(sq, occ))
-#define PYRRHIC_QUEEN_ATTACKS(sq, occ)   (queenAttacks(sq, occ))
-#define PYRRHIC_KING_ATTACKS(sq)         (kingAttacks(sq))
+#define PYRRHIC_PAWN_ATTACKS(sq, c)      (PawnAttacks[c][sq])
+#define PYRRHIC_KNIGHT_ATTACKS(sq)       (AttackBB<KNIGHT>(static_cast<Square>(sq)))
+#define PYRRHIC_BISHOP_ATTACKS(sq, occ)  (AttackBB<BISHOP>(static_cast<Square>(sq), occ))
+#define PYRRHIC_ROOK_ATTACKS(sq, occ)    (AttackBB<ROOK>(static_cast<Square>(sq), occ))
+#define PYRRHIC_QUEEN_ATTACKS(sq, occ)   (AttackBB<QUEEN>(static_cast<Square>(sq), occ))
+#define PYRRHIC_KING_ATTACKS(sq)         (AttackBB<KING>(static_cast<Square>(sq)))
 
 /*
  * Pyrrhic can produce scores for tablebase moves. These depend on the value
